@@ -1,13 +1,18 @@
 package main;
 
 public class VendingMachine {
-    String displayMessage = "Insert Coin";
+    double balance;
 
-    public String GetMessage() {
-        return displayMessage;
+    public VendingMachine(){
+        balance = 0.00;
     }
 
-    public void insert(String quarter) {
-        displayMessage = "0.25";
+    public String GetMessage() {
+        if(balance == 0) return "Insert Coin";
+        return String.format("%.2f", balance);
+    }
+
+    public void insert(Coin quarter) {
+        balance+=quarter.getCoinValue();
     }
 }
