@@ -44,9 +44,20 @@ public class WhenAcceptingCoins {
 
     @Test
     public void MachineStillDisplaysInsertCoinAfterUnknownCoinInserted(){
-        Coin unkownCoin = Unknown;
-        machine.Insert(unkownCoin);
+        machine.Insert(Unknown);
         assertEquals("Insert Coin", machine.GetMessage());
-        assertTrue(machine.CoinReturn.contains(unkownCoin));
+        assertTrue(machine.CoinReturn.contains(Unknown));
     }
+
+    @Test
+    public void MachineDisplays41AfterAllCoinsAndUnknown(){
+        machine.Insert(Quarter);
+        machine.Insert(Dime);
+        machine.Insert(Penny);
+        machine.Insert(Nickel);
+        machine.Insert(Unknown);
+        assertEquals("0.41", machine.GetMessage());
+        assertTrue(machine.CoinReturn.contains(Unknown));
+    }
+
 }
