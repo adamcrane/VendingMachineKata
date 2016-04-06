@@ -5,8 +5,7 @@ import main.VendingMachine;
 import org.junit.Before;
 import org.junit.Test;
 
-import static main.Coin.Dime;
-import static main.Coin.Quarter;
+import static main.Coin.*;
 import static org.junit.Assert.*;
 
 public class WhenAcceptingCoins {
@@ -25,14 +24,29 @@ public class WhenAcceptingCoins {
 
     @Test
     public void MachineDisplays0_25WhenQuarterEntered(){
-        machine.insert(Quarter);
+        machine.Insert(Quarter);
         assertEquals("0.25", machine.GetMessage());
     }
 
     @Test
     public void MachineDisplays0_35WhenGivenQuarterAndDime(){
-        machine.insert(Quarter);
-        machine.insert(Dime);
+        machine.Insert(Quarter);
+        machine.Insert(Dime);
         assertEquals("0.35", machine.GetMessage());
+    }
+
+    @Test
+    public void MachineDisplays0_06WhenGivenNickelAndPenny(){
+        machine.Insert(Penny);
+        machine.Insert(Nickel);
+        assertEquals("0.06", machine.GetMessage());
+    }
+
+    @Test
+    public void MachineStillDisplaysInsertCoinAfterUnknownCoinInserted(){
+        Coin unkownCoin = Unknown;
+        machine.Insert(unkownCoin);
+        assertEquals("Insert Coin", machine.GetMessage());
+        assertTrue(machine.CoinReturn.contains(unkownCoin));
     }
 }
