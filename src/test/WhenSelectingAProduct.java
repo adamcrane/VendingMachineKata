@@ -3,6 +3,8 @@ package test;
 import main.VendingMachine;
 import org.junit.Before;
 import org.junit.Test;
+
+import static main.Coin.Quarter;
 import static org.junit.Assert.*;
 
 public class WhenSelectingAProduct {
@@ -36,6 +38,23 @@ public class WhenSelectingAProduct {
     public void MachineDisplaysPriceSixtyFiveCentsThenInsertCoinWhenNoFunds(){
         machine.AttemptToPurchase("Candy");
         assertEquals("PRICE 0.65", machine.GetMessage());
+        assertEquals("Insert Coin", machine.GetMessage());
+    }
+
+    @Test
+    public void MachineDisplaysPriceSixtyFiveCentsThenTwentyFiveCentsWhenOnlyQuarter(){
+        machine.Insert(Quarter);
+        machine.AttemptToPurchase("Candy");
+        assertEquals("PRICE 0.65", machine.GetMessage());
+        assertEquals("0.25", machine.GetMessage());
+    }
+
+    @Test
+    public void MachineDisplaysThankYouThenInsertCoinsWhenEvenChange(){
+        machine.Insert(Quarter);
+        machine.Insert(Quarter);
+        machine.AttemptToPurchase("Chips");
+        assertEquals("Thank You", machine.GetMessage());
         assertEquals("Insert Coin", machine.GetMessage());
     }
 }

@@ -9,7 +9,7 @@ public class VendingMachine {
     private double balance;
     public ArrayList<Coin> CoinReturn;
     private HashMap<String, Double> products;
-    private Stack<String> displayMessages = new Stack<String>();
+    private Stack<String> displayMessages = new Stack<>();
 
     public VendingMachine(){
         balance = 0.00;
@@ -19,6 +19,13 @@ public class VendingMachine {
     }
 
     public String GetMessage() {
+        if(displayMessages.peek().startsWith("Thank You"))
+        {
+            String thankYou = displayMessages.pop();
+            displayMessages.clear();
+            displayMessages.push("Insert Coin");
+            return thankYou;
+        }
         if(displayMessages.peek().startsWith("PRICE")){
             return displayMessages.pop();
         }
@@ -50,6 +57,12 @@ public class VendingMachine {
     }
 
     public void AttemptToPurchase(String chips) {
-        displayMessages.push("PRICE "+ String.format("%.2f", products.get(chips)));
+        if(balance == products.get(chips)){
+            displayMessages.push("Thank You");
+            balance = 0.0;
+        }
+        else {
+            displayMessages.push("PRICE " + String.format("%.2f", products.get(chips)));
+        }
     }
 }
