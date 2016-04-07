@@ -22,8 +22,7 @@ public class VendingMachine {
         if(displayMessages.peek().startsWith("Thank You"))
         {
             String thankYou = displayMessages.pop();
-            displayMessages.clear();
-            displayMessages.push("Insert Coin");
+            resetDisplayMessages();
             return thankYou;
         }
         if(displayMessages.peek().startsWith("PRICE")){
@@ -32,6 +31,11 @@ public class VendingMachine {
         else {
             return displayMessages.peek();
         }
+    }
+
+    private void resetDisplayMessages() {
+        displayMessages.clear();
+        displayMessages.push("Insert Coin");
     }
 
     public void Insert(Coin coin) {
