@@ -31,4 +31,11 @@ public class WhenSelectingAProduct {
     public void MachineHasCandyPricedAtSixtyFiveCents(){
         assertEquals(.65, machine.GetPriceOf("Candy"),0.001);
     }
+
+    @Test
+    public void MachineDisplaysPriceSixtyFiveCentsThenInsertCoinWhenNoFunds(){
+        machine.AttemptToPurchase("Candy");
+        assertEquals("PRICE 0.65", machine.GetMessage());
+        assertEquals("Insert Coin", machine.GetMessage());
+    }
 }
