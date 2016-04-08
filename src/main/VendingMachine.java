@@ -1,5 +1,6 @@
 package main;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,12 +11,14 @@ public class VendingMachine {
     public ArrayList<Coin> CoinReturn;
     private HashMap<String, Double> products;
     private Stack<String> displayMessages = new Stack<>();
+    private ChangeGetter changeGetter;
 
     public VendingMachine(){
         balance = 0.00;
         CoinReturn = new ArrayList<>();
         products = new HashMap<>();
         displayMessages.push("Insert Coin");
+        changeGetter = new ChangeGetter();
     }
 
     public String GetMessage() {
@@ -61,8 +64,9 @@ public class VendingMachine {
     }
 
     public void AttemptToPurchase(String chips) {
-        if(balance == products.get(chips)){
+        if(balance >= products.get(chips)){
             displayMessages.push("Thank You");
+            CoinReturn.addAll(changeGetter.GetChangeFor(BigDecimal.valueOf(balance - products.get(chips))));
             balance = 0.0;
         }
         else {
