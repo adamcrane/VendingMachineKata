@@ -6,9 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+import static main.Coin.Quarter;
+
 public class VendingMachine {
     private double balance;
     public ArrayList<Coin> CoinReturn;
+    public ArrayList<Coin> CoinsInTransaction;
     private HashMap<String, Double> products;
     private Stack<String> displayMessages = new Stack<>();
     private ChangeGetter changeGetter;
@@ -16,6 +19,7 @@ public class VendingMachine {
     public VendingMachine(){
         balance = 0.00;
         CoinReturn = new ArrayList<>();
+        CoinsInTransaction = new ArrayList<>();
         products = new HashMap<>();
         displayMessages.push("Insert Coin");
         changeGetter = new ChangeGetter();
@@ -44,6 +48,7 @@ public class VendingMachine {
     public void Insert(Coin coin) {
         if(CoinIsKnown(coin)) {
             balance += coin.getCoinValue();
+            CoinsInTransaction.add(coin);
             displayMessages.push(String.format("%.2f", balance));
         }
         else {
@@ -72,5 +77,11 @@ public class VendingMachine {
         else {
             displayMessages.push("PRICE " + String.format("%.2f", products.get(chips)));
         }
+    }
+
+    public void ReturnCoins() {
+        CoinReturn.addAll(CoinsInTransaction);
+        CoinsInTransaction.clear();
+        resetDisplayMessages();
     }
 }

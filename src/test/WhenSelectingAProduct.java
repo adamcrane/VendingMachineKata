@@ -71,4 +71,15 @@ public class WhenSelectingAProduct {
         assertEquals(Quarter, machine.CoinReturn.get(0));
         assertEquals(Dime, machine.CoinReturn.get(1));
     }
+
+    @Test
+    public void ReturnsCoinsInputedWhenReturnCoinsSelected(){
+        machine.Insert(Quarter);
+        machine.Insert(Dime);
+        machine.ReturnCoins();
+        assertEquals(Quarter, machine.CoinReturn.get(0));
+        assertEquals(Dime, machine.CoinReturn.get(1));
+        assertEquals("Insert Coin", machine.GetMessage());
+    }
+
 }
